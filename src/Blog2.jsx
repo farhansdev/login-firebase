@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Dashboard() {
+function Blog2() {
 
     function BacktoDashboard() {
         try {
@@ -282,4 +282,4 @@ function Dashboard() {
   
 
 
-export default Dashboard;
+export default Blog2;
