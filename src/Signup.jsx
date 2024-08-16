@@ -30,7 +30,7 @@ function Signup() {
       window.location.href = "/Login";
     } catch (error) {
       console.log(error.message);
-      alert("Email already in use!");
+      // alert("Email already in use!");
     }
 
   };
