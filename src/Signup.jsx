@@ -3,13 +3,14 @@ import { auth, db } from './firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 function Signup() {
 
   const [email, setEmail] = useState('');
   const [pswd, setPswd] = useState('');
   const [name, setName] = useState('');
+  const [Lname, setLname] = useState('');
+  const [number, setNumber] = useState('');
 
 
   const handleSignup = async (e) => {
@@ -18,13 +19,15 @@ function Signup() {
       await createUserWithEmailAndPassword(auth, email, pswd)
       const user = auth.currentUser;
       console.log(user);
-      if(user) {
-       await setDoc(doc(db, "Users", user.uid), {
-          email: user.email,
+      if (user) {
+        await setDoc(doc(db, "Users", user.uid), {
           firstName: name,
+          lastName: Lname,
+          email: user.email,
+          number: number,
           password: pswd
-       });
-    }
+        });
+      }
       console.log("User Succesfuly Registerd!");
       // alert("User Succesfuly Registerd!");
       window.location.href = "/Login";
@@ -45,18 +48,26 @@ function Signup() {
             <form className="space-y-4 md:space-y-6">
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                <input onChange={(e) => setName(e.target.value)} type="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name" />
+                <input onChange={(e) => setName(e.target.value)} type="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name" required=""/>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
+                <input onChange={(e) => setLname(e.target.value)} type="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="last name" required=""/>
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input onChange={(e) => setEmail(e.target.value)} type="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" />
+                <input onChange={(e) => setEmail(e.target.value)} type="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter mobile number for recovery password</label>
+                <input onChange={(e) => setNumber(e.target.value)} type="number" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="enter mobile number for recovery password" required=""/>
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input onChange={(e) => setPswd(e.target.value)} type="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                <input onChange={(e) => setPswd(e.target.value)} type="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
               </div>
               <button onClick={handleSignup} className="w-full text-white mt-10 bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-               <p className='text-white mt-2'>Already have an account ? <Link to="/Login">Log in</Link></p>
+              <p className='text-white mt-2'>Already have an account ? <Link to="/Login">Log in</Link></p>
             </form>
           </div>
         </div>
